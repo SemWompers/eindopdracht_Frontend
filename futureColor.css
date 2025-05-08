@@ -1,0 +1,57 @@
+body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  #header {
+    background: #222;
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+    font-size: 24px;
+  }
+
+  #main-container {
+    display: flex;
+    padding: 1rem;
+    gap: 2rem;
+  }
+
+  #ingredients, #pots {
+    flex: 1;
+    border: 1px solid #ccc;
+    min-height: 300px;
+    padding: 1rem;
+  }
+
+  .ingredient {
+    width: 100px;
+    height: 50px;
+    margin: 0.5rem;
+    padding: 0.5rem;
+    cursor: grab;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+  }
+  .test{ background-color: #000; }
+  .korrelig{ border: 2px dotted #fff; }
+  .grofkorrelig{ border: 2px dashed #fff; }
+  .glad{ box-shadow: inset 0 0 10px #000; }
+  .slijmerig{ background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.2), transparent 5px); }
+
+  .pot {
+    border: 2px solid #444;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    min-height: 150px;
+  }
+
+  .pot.over {
+    background-color: #eef;
+  }
+
+  button {
+    margin-bottom: 1rem;
+  }

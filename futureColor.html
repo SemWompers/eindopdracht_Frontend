@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Future Color</title>
+  <link rel="stylesheet" href="futureColor.css  " />
+</head>
+<body>
+  <div id="header">Future Color</div>
+  <div style="padding: 1rem;">
+    <button onclick="createIngredient()">Voeg ingrediënt toe</button>
+    <select type="text" id="texture">
+      <option value="" disabled selected>Textuur</option>
+      <option class="korrelig" value="korrelig">korrelig</option>
+      <option class="test" value="grofkorrelig">GrofKorrelig</option>
+      <option class="glad" value="glad">Glad</option>
+      <option class="slijmerig" value="slijmerig">slijmerig</option>
+    </select>
+    <select type="text" id="mengsnelheid">
+      <option value="" disabled selected>mengsnelheid</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+    <input type="text" id="mengtijd" placeholder="mengtijd in milliseconden" />
+    <input type="color" id="kleur"/>
+    <button onclick="createPot()">Voeg pot toe</button>
+  </div>
+  <div id="main-container">
+    <div id="ingredients"><h3>Ingrediënten</h3></div>
+    <div id="pots"><h3>Potten</h3></div>
+  </div>
+  <script src="ingredients.js" async defer></script>
+</body>
+</html>
