@@ -35,6 +35,7 @@ let ingredientId = 0;
 
     function createPot() {
       const pot = document.createElement('div');
+      pot.draggable = true;
       pot.className = 'pot';
       pot.dataset.ingredients = JSON.stringify([]);
 
@@ -73,5 +74,72 @@ let ingredientId = 0;
       document.getElementById('pots').appendChild(pot);
     }
 
+    function createMachine() {
+      const machine = document.createElement('div');
+      machine.className = 'machine';
+      machine.textContent = 'Sleep hier een pot in om te mengen...';
+    
+      machine.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        machine.classList.add('over');
+      });
+    
+      machine.addEventListener('dragleave', () => {
+        machine.classList.remove('over');
+      });
+    
+      machine.addEventListener('drop', (e) => {
+        e.preventDefault();
+        machine.classList.remove('over');
+    
+        const pot = document.querySelector('.pot[draggable="true"]:hover');
+        if (!pot) {
+          alert('Geen pot gevonden!');
+          return;
+        }
+    
+        const ingredients = JSON.parse(pot.dataset.ingredients);
+        if (ingredients.length === 0) {
+          alert("Pot is leeg!");
+          return;
+        }
+    
+        let totalR = 0, totalG = 0, totalB = 0;
+        let totalTime = 0;
+        for (const ing of pot.children) {
+          const color = window.getComputedStyle(ing).backgroundColor;
+          const [r, g, b] = color.match(/\d+/g).map(Number);
+          totalR += r;
+          totalG += g;
+          totalB += b;
+          totalTime += parseInt(ing.dataset.mixtime) || 1000;
+        }
+    
+        const mixResult = document.createElement('div');
+        mixResult.textContent = 'Mengen...';
+        mixResult.style.padding = '10px';
+        mixResult.style.border = '1px solid #333';
+        machine.appendChild(mixResult);
+    
+        setTimeout(() => {
+          mixResult.style.backgroundColor = `rgb(${Math.floor(totalR / ingredients.length)}, ${Math.floor(totalG / ingredients.length)}, ${Math.floor(totalB / ingredients.length)})`;
+          mixResult.textContent = `Gemengd! (${ingredients.length} ingrediënten)`;
+        }, totalTime);
+      });
+    
+      document.getElementById(`hall-${activeHall}`).appendChild(machine);
+    }
+     
+
+let activeHall = 1;
+
+function switchHall(nr) {
+  document.getElementById('hall-1').classList.remove('active');
+  document.getElementById('hall-2').classList.remove('active');
+  document.getElementById(`hall-${nr}`).classList.add('active');
+  activeHall = nr;
+}
+
+    
 
     
