@@ -89,43 +89,63 @@ let ingredientId = 0;
       });
     
       machine.addEventListener('drop', (e) => {
-        e.preventDefault();
-        machine.classList.remove('over');
-    
-        const pot = document.querySelector('.pot[draggable="true"]:hover');
-        if (!pot) {
-          alert('Geen pot gevonden!');
-          return;
-        }
-    
-        const ingredients = JSON.parse(pot.dataset.ingredients);
-        if (ingredients.length === 0) {
-          alert("Pot is leeg!");
-          return;
-        }
-    
-        let totalR = 0, totalG = 0, totalB = 0;
-        let totalTime = 0;
-        for (const ing of pot.children) {
-          const color = window.getComputedStyle(ing).backgroundColor;
-          const [r, g, b] = color.match(/\d+/g).map(Number);
-          totalR += r;
-          totalG += g;
-          totalB += b;
-          totalTime += parseInt(ing.dataset.mixtime) || 1000;
-        }
-    
-        const mixResult = document.createElement('div');
-        mixResult.textContent = 'Mengen...';
-        mixResult.style.padding = '10px';
-        mixResult.style.border = '1px solid #333';
-        machine.appendChild(mixResult);
-    
-        setTimeout(() => {
-          mixResult.style.backgroundColor = `rgb(${Math.floor(totalR / ingredients.length)}, ${Math.floor(totalG / ingredients.length)}, ${Math.floor(totalB / ingredients.length)})`;
-          mixResult.textContent = `Gemengd! (${ingredients.length} ingrediënten)`;
-        }, totalTime);
-      });
+  e.preventDefault();
+  machine.classList.remove('over');
+
+  const pot = document.querySelector('.pot[draggable="true"]:hover');
+  if (!pot) {
+    alert('Geen pot gevonden!');
+    return;
+  }
+
+  const ingredients = JSON.parse(pot.dataset.ingredients);
+  if (ingredients.length === 0) {
+    alert("Pot is leeg!");
+    return;
+  }
+
+  // Pak de mengsnelheid (alle ingrediënten moeten dezelfde hebben)
+  const speed = ingredients[0].speed; // gegarandeerd dezelfde voor alle
+
+  // Voeg de juiste schud-klasse toe
+  machine.classList.add(`shake-speed-${speed}`);
+
+  let totalR = 0, totalG = 0, totalB = 0;
+  let totalTime = 0;
+
+  for (const ing of pot.children) {
+    const color = window.getComputedStyle(ing).backgroundColor;
+    const [r, g, b] = color.match(/\d+/g).map(Number);
+    totalR += r;
+    totalG += g;
+    totalB += b;
+    totalTime += parseInt(ing.dataset.mixtime) || 1000;
+  }
+
+  const mixResult = document.createElement('div');
+  mixResult.textContent = 'Mengen...';
+  mixResult.style.padding = '10px';
+  mixResult.style.border = '1px solid #333';
+  machine.appendChild(mixResult);
+
+  setTimeout(() => {
+  const finalColor = `rgb(${Math.floor(totalR / ingredients.length)}, ${Math.floor(totalG / ingredients.length)}, ${Math.floor(totalB / ingredients.length)})`;
+  mixResult.style.backgroundColor = finalColor;
+  mixResult.textContent = `Gemengd! (${ingredients.length} ingrediënten)`;
+
+  // Stop animatie
+  machine.classList.remove(`shake-speed-${speed}`);
+
+  // Maak de mixResult div sleepbaar
+  mixResult.draggable = true;
+  mixResult.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData('text/plain', finalColor);
+  });
+}, totalTime);
+
+
+});
+
     
       document.getElementById(`hall-${activeHall}`).appendChild(machine);
     }
@@ -142,4 +162,34 @@ function switchHall(nr) {
 
     
 
-    
+    // Grid genereren bij pagina laden
+document.addEventListener('DOMContentLoaded', () => {
+  const tester = document.getElementById('color-tester');
+  for (let i = 0; i < 24; i++) {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.dataset.index = i;
+
+    // Laat toe dat kleuren hierheen gesleept worden
+    cell.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      cell.classList.add('over');
+    });
+
+    cell.addEventListener('dragleave', () => {
+      cell.classList.remove('over');
+    });
+
+    cell.addEventListener('drop', (e) => {
+      e.preventDefault();
+      cell.classList.remove('over');
+
+      const color = e.dataTransfer.getData('text/plain');
+      if (color.startsWith('rgb')) {
+        cell.style.backgroundColor = color;
+      }
+    });
+
+    tester.appendChild(cell);
+  }
+});
