@@ -9,7 +9,7 @@
 <body>
   <div id="header">Future Color</div>
   <div style="padding: 1rem;">
-    <button onclick="createIngredient()">Voeg ingrediënt toe</button>
+    <button id="createIngredient">Voeg ingrediënt toe</button>
     <select type="text" id="texture">
       <option value="" disabled selected>Textuur</option>
       <option value="korrelig">korrelig</option>
@@ -25,25 +25,37 @@
     </select>
     <input type="text" id="mengtijd" placeholder="mengtijd in milliseconden" />
     <input type="color" id="kleur"/>
-    <button onclick="createPot()">Voeg pot toe</button>
-    <button onclick="createMachine()">Voeg machine toe</button>
-  </div>
+    <button id="createPot">Voeg pot toe</button>
+    <button id="createMachine">Voeg machine toe</button>
+    <input type="checkbox" id="opt-in" /> Legend
+      <div class="legend">
+        <div class="ingredient"><p class="korrelig"">korrelig</p></div>
+        <div class="ingredient"><p class="grofkorrelig">grofkorrelig</p></div>
+        <div class="ingredient"><p class="glad">glad</p></div>
+        <div class="ingredient"><p class="slijmerig">slijmerig</p></div>
+      </div>
+    </div>
   <div id="main-container">
     <div id="ingredients"><h3>Ingrediënten</h3></div>
     <div id="pots"><h3>Potten</h3></div>
   </div>
   <div style="padding: 1rem;">
-    <button onclick="switchHall(1)">Toon Hal 1</button>
-    <button onclick="switchHall(2)">Toon Hal 2</button>
+    <button id="btn-hall-1">Toon Hal 1</button>
+    <button id="btn-hall-2">Toon Hal 2</button>
   </div>
   <div id="halls">
     <div id="hall-1" class="hall-container active"></div>
     <div id="hall-2" class="hall-container"></div>
   </div>
+  <div id="potsDone"><h3>gemengde potten</h3></div>
   <div id="color-tester">
     
   </div>
   
-  <script src="ingredients.js" async defer></script>
+  <h3>Triadic Colors</h3>
+<div id="triadic-display" style="display: flex; gap: 10px; margin-top: 10px;"></div>
+
+  
+  <script type="module" src="scrips/main.js"></script>
 </body>
 </html>

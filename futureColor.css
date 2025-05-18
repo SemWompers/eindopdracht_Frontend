@@ -35,23 +35,49 @@ body {
     color: white;
     font-weight: bold;
   }
-  .test{ background-color: #000; }
   .korrelig{ border: 2px dotted #fff; }
   .grofkorrelig{ border: 2px dashed #fff; }
   .glad{ box-shadow: inset 0 0 10px #000; }
   .slijmerig{ background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.2), transparent 5px); }
 
-  .pot {
-    border: 2px solid #444;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    min-height: 150px;
+  .korrelig>p + .grofkorrelig>p + .glad>p + .slijmerig>p {
+    background-color: #000;
   }
+
+  #pots>h3{
+    margin-right: 1000px;
+  }
+#pots {
+  display: flex;
+  flex-wrap: wrap;              /* Allows wrapping to next row */
+  gap: 1rem;                    /* Optional spacing between pots */
+  justify-content: flex-start; /* Align items to the left */
+}
+
+.pot {
+  border: 2px solid #444;
+  padding: 1rem;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  width: calc(50% - 0.5rem);    /* 2 per row, minus half the gap */
+  box-sizing: border-box;
+}
+
+
 
   .pot.over {
     background-color: #eef;
   }
+.pot-done{
+    border: 2px solid #444;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    min-height: 20px;
+    width: 15%;
+  }
 
+  
   button {
     margin-bottom: 1rem;
   }
@@ -100,17 +126,17 @@ body {
 }
 
 .machine.shake-speed-3 {
-  animation: shake 0.2s infinite;
+  animation: shake 0.01s infinite;
 }
 
   #color-tester {
   display: grid;
-  grid-template-columns: repeat(4, 50px);
-  grid-template-rows: repeat(4, 50px);
+  grid-template-columns: repeat(6, 50px);
   gap: 5px;
   margin: 1rem;
   border: 2px solid #ccc;
   padding: 10px;
+  width:fit-content;
 }
 
 #color-tester .cell {
@@ -120,4 +146,46 @@ body {
 }
 #color-tester .cell.over {
   outline: 2px dashed #444;
+}
+
+.legend {
+  height: auto;
+  width: 320px;
+  background: rgba(40, 38, 38, 0.97);
+  border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.25);
+  color: #fff;
+  padding: 1.5rem 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  display: none;
+  position: relative;
+  transition: box-shadow 0.3s, background 0.3s;
+}
+
+.legend::before {
+  content: "Legend";
+  display: block;
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+  color: #ffd700;
+}
+
+input[type="checkbox"]:checked ~ .legend {
+  display: block;
+  animation: fadeInLegend 0.4s;
+}
+
+@keyframes fadeInLegend {
+  from { opacity: 0; transform: translateY(20px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+.triadic-color {
+  width: 50px;
+  height: 50px;
+  border: 2px solid #222;
+  border-radius: 6px;
 }
