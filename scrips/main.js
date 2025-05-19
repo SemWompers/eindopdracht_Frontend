@@ -1,9 +1,9 @@
 import {initColorTesterGrid, initMixedColorPots} from './testData.js';
-import { initTestIngredients, createIngredient } from './ingredients.js';
+import { createIngredientFromForm, initTestIngredients } from './ingredients.js';
 import { createPot } from './pots.js';
 import { createMachine } from './machine.js';
 import { initHallSwitchButtons } from './halls.js';
-import { getTriadicColors } from './colorpicker.js'
+import { getTriadicColors } from './colorpicker.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   initHallSwitchButtons();
@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById("createPot").addEventListener("click", () => createPot());
   document.getElementById("createMachine").addEventListener("click", () => createMachine());
-  document.getElementById("createIngredient").addEventListener("click", () => createIngredient());
+  document.getElementById("createIngredient").addEventListener("click", () => createIngredientFromForm());
 
   
 

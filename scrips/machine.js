@@ -85,7 +85,7 @@ export function createMachine() {
       finishedPot.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text/plain', finalColor);
       });
-      document.getElementById('pot-done').appendChild(finishedPot);
+      document.getElementById('potsDone').appendChild(finishedPot);
 
       pot.remove();
 

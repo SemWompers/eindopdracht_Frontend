@@ -189,3 +189,9 @@ input[type="checkbox"]:checked ~ .legend {
   border: 2px solid #222;
   border-radius: 6px;
 }
+
+#triadic-display{
+  display: flex; 
+  gap: 10px; 
+  margin-top: 10px;
+}
